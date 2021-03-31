@@ -105,15 +105,13 @@ input[type=number]:focus,
     }
 }
 
-/* Playlist */
+/* Banner */
 
 .banner {
-    background-color: #c7c7c7;
     min-height: auto;
 }
 
 .ban-image {
-    width: 240px;
     margin: 90px 0;
 }
 
@@ -128,42 +126,68 @@ input[type=number]:focus,
     margin-bottom: 40px;
 }
 
+.btn-bookmark {
+    background-color: #1f1f1f;
+    border-radius: 40px;
+    padding: 12px 30px;
+    color: white;
+}
+
+@media screen and (max-width: 767.98px) {
+    .ban-image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+        margin-bottom: 0px;
+    }
+
+    .ban-text {
+        text-align: center;
+    }
+
+    .ban-text-detail {
+        text-align: center;
+    }
+    
+    .btn-bookmarked {
+        text-align: center;
+    }
+}
+
 h5 {
     font-family: 'Rubik', sans-serif;
     margin: 20px 0;
 }
 
-.btn-kategori {
-    width: auto;
-    border-radius: 20px;
-    padding: 10px 5 ;
-    margin: 10px 0;
-}
+/* Kategori */
 
-.btn-primary {
-    background-color: #1f1f1f;
-    border-radius: 40px;
-    padding: 12px 30px;
+.btn-kategori {
+    border-radius: 20px;
+    margin: 10px 0;
+    font-size: 0.8rem;
+    color: white;
 }
 
 .text-btn {
     margin: 80px 0;
 }
 
+/* Top Playlist */
+
 .top-playlist {
-    background-color: #c7c7c7;
     min-height: auto;
-    margin: 10px 0;
+    margin-top: 20px;
 }
 
 .judul-top-playlist {
-    margin-top: 20px;
     margin-left: -30px;
+    margin-top: 20px;
 }
 
 .views-top-playlist {
     margin-top: -10px;
-    font-size: 13px;
+    font-size: 12px;
     margin-left: -30px;
 }
 
@@ -171,6 +195,8 @@ h5 {
     width: 40px;
     margin: 20px 22px 15px 22px;
 }
+
+/* Rekomendasi */
 
 .rekomen-img {
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
@@ -180,8 +206,6 @@ h5 {
 }
 
 .img-thumbnail {
-    padding: 40px;
-    background-color: #c7c7c7;
     border: 0px !important;
     border-radius: 20px 20px 30px 30px;
     max-width: 100%;
