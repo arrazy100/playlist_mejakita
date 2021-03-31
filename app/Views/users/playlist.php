@@ -253,6 +253,54 @@
 
                         <!-- END 1 -->
 
+                        <div class="col-3 col-lg-4">
+                            <div class="top-playlist">
+                                <img class="img-fluid" src="<?= base_url() ?>/assets/img/hero_img.png" alt="">
+                            </div>
+                        </div>
+                        <div class="col-9 col-lg-8 d-flex align-items-center">
+                            <div class="row">
+                                <div class="col-10">
+                                    <p class="judul-top-playlist"><b>Biologi - DNA</b></p>
+                                    <p class="views-top-playlist">200.000.000 Views</p>
+                                </div>
+                                <div class="col-2 d-flex" style="margin-left: -30px;">
+                                    <div class="col">
+                                        <i class="far fa-heart heart-top-playlist"></i>
+                                    </div>
+                                    <div class="col">
+                                        <i class="far fa-bookmark book-top-playlist"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- END 2 -->
+
+                        <div class="col-3 col-lg-4">
+                            <div class="top-playlist">
+                                <img class="img-fluid" src="<?= base_url() ?>/assets/img/hero_img.png" alt="">
+                            </div>
+                        </div>
+                        <div class="col-9 col-lg-8 d-flex align-items-center">
+                            <div class="row">
+                                <div class="col-10">
+                                    <p class="judul-top-playlist"><b>Biologi - DNA</b></p>
+                                    <p class="views-top-playlist">200.000.000 Views</p>
+                                </div>
+                                <div class="col-2 d-flex" style="margin-left: -30px;">
+                                    <div class="col">
+                                        <i class="far fa-heart heart-top-playlist"></i>
+                                    </div>
+                                    <div class="col">
+                                        <i class="far fa-bookmark book-top-playlist"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- END 3 -->
+
                         <!-- TOP PLAYLIST SECTION END -->
                     </div>
                 </div>
