@@ -240,7 +240,7 @@
                                     <p class="judul-top-playlist"><b>Biologi - DNA</b></p>
                                     <p class="views-top-playlist">200.000.000 Views</p>
                                 </div>
-                                <div class="col-2 d-flex">
+                                <div class="col-2 d-flex" style="margin-left: -30px;">
                                     <div class="col">
                                         <i class="far fa-heart heart-top-playlist"></i>
                                     </div>
