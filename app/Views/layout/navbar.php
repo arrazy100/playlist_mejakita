@@ -36,17 +36,13 @@
                 <li class="nav-item">
                     <i class="fas fa-envelope"></i>
                 </li>
-                <li class="nav-item">
-                    <div class="dropdown">
-                        <a class="btn btn-waring dropdown-toggle nav-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="profile" src="<?= base_url() ?>/assets/img/profile-default.png">
-                        </a>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="profile" src="<?= base_url() ?>/assets/img/profile-default.png">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
                     </div>
                 </li>
             </ul>
