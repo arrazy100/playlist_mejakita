@@ -69,8 +69,8 @@
                             <p style="color: #FFFFFF; margin-top: 10px"><b>Catatan</b></p>
                         </div>
                         <div class="col-6 d-flex justify-content-end" style="margin-top: 10px;">
-                            <button id="zoomIn" class="btn btn_primary" style="margin-right: 5px;">+</button>
-                            <button id="zoomOut" class="btn btn_primary">-</button>
+                            <button id="zoomIn" class="btn btn-zoom" style="margin-right: 5px;">+</button>
+                            <button id="zoomOut" class="btn btn-zoom">-</button>
                         </div>
                     </div>
                 </div>
