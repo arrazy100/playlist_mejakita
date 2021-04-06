@@ -22,24 +22,9 @@
     <?= $this->renderSection('content'); ?>
 
     <script>
-        $(document).ready(function() {
-            $(".like").click(function() {
-                $(this).toggleClass("heart");
-            });
-        });
-
-        $(document).ready(function() {
-            $(".book").click(function() {
-                $(this).toggleClass("bookmarked");
-            });
-        });
-        
-        $(document).ready(function() {
-            $(".terbaru-view-more").click(function() {
-                $(document.getElementsByClassName("scrollable")).toggleClass("scrollable-active");
-                $(document.getElementsByClassName("hidden")).toggleClass("line");
-            });
-        });
+        function toggleScroll() {
+            document.getElementById("content-list").classList.toggle("scroll-active");
+        };
     </script>
 
     <script src="<?= base_url() ?>/assets/bootstrap/js/bootstrap.js"></script>

@@ -34,6 +34,7 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Users::index');
 $routes->get('/detail-playlist', 'Users::detail');
 $routes->get('/bookmarked', 'Users::bookmarked');
+$routes->get('/tes', 'Users::tes');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

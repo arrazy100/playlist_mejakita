@@ -217,7 +217,7 @@
 
                     <!-- START -->
 
-                    <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                         <div class="rekomen-img">
                             <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
                             <div class="row">
@@ -237,7 +237,7 @@
 
                     <!-- END 1 -->
 
-                    <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                         <div class="rekomen-img">
                             <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
                             <div class="row">
@@ -257,7 +257,7 @@
 
                     <!-- END 2 -->
 
-                    <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                         <div class="rekomen-img">
                             <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
                             <div class="row">
@@ -277,7 +277,7 @@
 
                     <!-- END 3 -->
 
-                    <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                         <div class="rekomen-img">
                             <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
                             <div class="row">

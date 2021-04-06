@@ -24,6 +24,7 @@ class Users extends BaseController
 
 		return view('users/detail', $data);
 	}
+
 	public function bookmarked()
 	{
 		$data = [
@@ -31,5 +32,14 @@ class Users extends BaseController
 		];
 
 		return view('users/bookmarked', $data);
+	}
+
+	public function tes()
+	{
+		$data = [
+			'title' => 'Tes',
+		];
+
+		return view('users/tes', $data);
 	}
 }
