@@ -34,7 +34,14 @@
                         <!-- BOOKMARKED -->
 
                         <div class="col-12 btn-bookmarked">
-                            <button type="button" class="btn btn-bookmark float-md-right">Bookmarked</button>
+                            <div class="row float-md-right">
+                                <div class="col">
+                                    <button class="btn btn-bookmark" onclick="window.location.href='<?= base_url() ?>/bookmarked';">Dashboard</button>
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-bookmark" onclick="window.location.href='<?= base_url() ?>/bookmarked';">Bookmarked</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -48,133 +55,36 @@
 
                 <!-- REKOMENDASI SECTION -->
 
-                    <div class="col-12 col-lg-8">
+                    <div class="col-12 col-lg-8" id="rekomendasi">
                         <div class="row">
                             <div class="col-12">
                                 <h5>Rekomendasi</h5>
                             </div>
 
                             <!-- START -->
+                            <?php foreach($daftar_rekomendasi as $rekomendasi):?>
 
                             <div class="col-12 col-sm-6 col-xl-4">
-                                <div class="rekomen-img">
-                                    <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
+                                <div class="rekomen-img" onclick="window.location.href='<?= base_url() ?>/detail-playlist';">
+                                    <img src="<?= $rekomendasi->url ?>" class="img-thumbnail" alt="...">
                                     <div class="row">
                                         <div class="col-12">
-                                            <p class="judul-rekomen"><b>Biologi - DNA</b></p>
+                                            <p class="judul-rekomen text-truncate"><b><?= $rekomendasi->title ?></b></p>
                                         </div>
                                         <div class="col-12">
                                             <p class="views-rekomen">200.000.000 Views</p>
                                         </div>
                                         <div class="col-12">
-                                            <i class="far fa-bookmark book-rekomen"></i>
-                                            <i class="far fa-heart heart-rekomen"></i>
+                                            <i class="far fa-bookmark book-rekomen" onclick="event.stopPropagation(); alert('book');"></i>
+                                            <i class="far fa-heart heart-rekomen" onclick="event.stopPropagation(); alert('heart');"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- END 1 -->
+                            <?php endforeach;?>
 
-                            <div class="col-12 col-sm-6 col-xl-4">
-                                <div class="rekomen-img">
-                                    <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="views-rekomen">200.000.000 Views</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <i class="far fa-bookmark book-rekomen"></i>
-                                            <i class="far fa-heart heart-rekomen"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 2 -->
-
-                            <div class="col-12 col-sm-6 col-xl-4">
-                                <div class="rekomen-img">
-                                    <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="views-rekomen">200.000.000 Views</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <i class="far fa-bookmark book-rekomen"></i>
-                                            <i class="far fa-heart heart-rekomen"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 3 -->
-
-                            <div class="col-12 col-sm-6 col-xl-4">
-                                <div class="rekomen-img">
-                                    <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="views-rekomen">200.000.000 Views</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <i class="far fa-bookmark book-rekomen"></i>
-                                            <i class="far fa-heart heart-rekomen"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 4 -->
-
-                            <div class="col-12 col-sm-6 col-xl-4">
-                                <div class="rekomen-img">
-                                    <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="views-rekomen">200.000.000 Views</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <i class="far fa-bookmark book-rekomen"></i>
-                                            <i class="far fa-heart heart-rekomen"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 5 -->
-
-                            <div class="col-12 col-sm-6 col-xl-4">
-                                <div class="rekomen-img">
-                                    <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="views-rekomen">200.000.000 Views</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <i class="far fa-bookmark book-rekomen"></i>
-                                            <i class="far fa-heart heart-rekomen"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 6 -->
+                            <!-- END -->
 
                             <!-- PAGINATION SECTION -->
 
@@ -186,14 +96,11 @@
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
+                                        <?php for ($i = 1; $i < $n_pages; $i++):?>
+
+                                        <li class="page-item"><a class="page-link" href="<?= base_url() ?>/?page=<?= $i ?>"><?= $i ?></a></li>
+
+                                        <?php endfor ?>
                                     </ul>
                                 </nav>
                             </div>
@@ -400,8 +307,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 terbaru-list" style="background-color: white;">
-                                        <div class="col-12">
+                                    <div class="col-12 terbaru-list" style="background-color: #4da8da;">
+                                        <div class="col-12" style="color: #fff;">
                                             <h5>Biologi</h5>
                                         </div>
                                         <div class="col-12 scrollable-list" id="content-list">

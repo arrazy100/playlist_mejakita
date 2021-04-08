@@ -58,86 +58,23 @@
 
             <!-- BANNER DETAIL SECTION END -->
 
-            <!-- VIEWS CATATAN SECTION-->
+            <!-- VIEWS CONTENT SECTION-->
 
-            <div class="col-12">
-                <!-- HEADER -->
+            <?php if ($category == 'catatan'): ?>
 
-                <div class="header">
-                    <div class="row">
-                        <div class="col-6">
-                            <p style="color: #FFFFFF; margin-top: 10px"><b>Catatan</b></p>
-                        </div>
-                        <div class="col-6 d-flex justify-content-end" style="margin-top: 10px;">
-                            <button id="zoomIn" class="btn btn-zoom" style="margin-right: 5px;">+</button>
-                            <button id="zoomOut" class="btn btn-zoom">-</button>
-                        </div>
-                    </div>
-                </div>
+            <?= $this->include('konten_playlist/catatan'); ?>
 
-                <!-- PDF -->
+            <?php elseif ($category == 'diskusi_pr' || $category == 'link_referensi'): ?>
 
-                <input type="hidden" id="pdf" value="<?= $pdf; ?>">
+            <?= $this->include('konten_playlist/iframe'); ?>
 
-                <div id="pdf-container" class="embed-responsive embed-responsive-16by9" style="overflow-y: scroll; overflow-x: scroll;">
-                    <div id="viewer" class="pdfViewer embed-responsive-item"></div>
-                </div>
+            <?php elseif ($category == 'youtube'): ?>
 
-                <!-- FOOTER -->
+            <?= $this->include('konten_playlist/youtube') ?>
 
-                <div class="foot">
-                </div>
-            </div>
+            <?php endif; ?>
 
-            <!-- VIEWS CATATAN SECTION END -->
-
-            <!-- VIEWS DISKUSI PR SECTION -->
-
-            <!-- HEADER -->
-            <div class="col-12" style="display: none;">
-                <div class="header">
-                    <div class="row">
-                        <div class="col-6">
-                            <p style="color: #FFFFFF; margin-top: 10px"><b>Diskusi PR</b></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe src="<?= base_url() ?>" class="embed-responsive-item" frameborder="0""></iframe>
-                </div>
-
-                <!-- FOOTER -->
-
-                <div class="foot">
-                </div>
-            </div>
-
-            <!-- VIEWS DISKUSI PR SECTION END -->
-
-            <!-- VIEWS VIDEO SECTION -->
-
-            <!-- HEADER -->
-            <div class="col-12" style="display: none;">
-                <div class="header">
-                    <div class="row">
-                        <div class="col-6">
-                            <p style="color: #FFFFFF; margin-top: 10px"><b>Video</b></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="embed-responsive embed-responsive-16by9" style="margin-top: 30px;">
-                    <iframe src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
-                </div>
-
-                <!-- FOOTER -->
-
-                <div class="foot">
-                </div>
-            </div>
-
-            <!-- VIEWS VIDEO SECTION END -->
+            <!-- VIEWS CONTENT SECTION END -->
 
             <!-- PLAYLIST CONTENT SECTION -->
 
@@ -304,5 +241,4 @@
         </div>
     </div>
 </div>
-<?= $this->include('layout/pdfviewer'); ?>
 <?= $this->endSection(); ?>

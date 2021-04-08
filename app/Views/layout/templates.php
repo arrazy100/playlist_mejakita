@@ -25,6 +25,12 @@
         function toggleScroll() {
             document.getElementById("content-list").classList.toggle("scroll-active");
         };
+
+        const field = 'page';
+        const url = window.location.href;
+        if (url.indexOf('?' + field + '=')) {
+            document.getElementById("rekomendasi").scrollIntoView();
+        }
     </script>
 
     <script src="<?= base_url() ?>/assets/bootstrap/js/bootstrap.js"></script>
