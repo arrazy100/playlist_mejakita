@@ -283,7 +283,7 @@
                                             <?php if($terbaru):?>
                                             <?php foreach($terbaru as $l):?>
 
-                                            <div class="content-item" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $rekomendasi->id_playlist ?>';">
+                                            <div class="content-item" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $l->id_playlist ?>';">
                                                 <div class="col">
                                                     <p class="content-item-title text-truncate"><?= $l->nama_playlist ?></p>
                                                 </div>
