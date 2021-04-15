@@ -1,4 +1,4 @@
-<?= $this->extend('layout/templates'); ?>
+<?= $this->extend('layout/bookmarked_templates'); ?>
 
 <?= $this->section('content'); ?>
 
@@ -22,27 +22,31 @@
                             <h5>Bookmarked</h5>
                         </div>
 
+                        <input type="hidden" id="protection_token" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
+
                         <!-- START -->
-                        <div class="row ">
-                            <div class="col-md-6">
+                        <div class="row">
+                            <?php if ($list): ?>
+
+                            <?php foreach ($list as $l): ?>
+
+                            <div class="col-md-6" id="book-<?= $l->id_playlist ?>">
                                 <div class="row bookmarked-img">
                                     <div class="col-lg-6 col-xl-6">
-                                        <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail1 mx-auto d-block" alt="...">
+                                        <img src="<?= $base_api_url ?>/files/profile/<?= $l->profile_pict ?>"" class="img-thumbnail1 mx-auto d-block" alt="...">
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="card-body" style="padding-left:0;">
-                                            <div style="display: inline-block">
-                                                <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-
-                                                <p class="views-rekomen">200.000.000 Views</p>
-
+                                            <div>
+                                                <p class="judul-rekomen text-truncate"><b><?= $l->nama_playlist ?></b></p>
+                                                <p class="views-rekomen"><?= $l->views ?> Views</p>
                                             </div>
-                                            <div style="display:inline-block; margin-left: 20px; vertical-align: top; margin-top: 12px">
-                                                <i class="far fa-bookmark book-rekomen"></i>
+                                            <div style="display: inline-block; margin-left: 20px; vertical-align: top; margin-top: 12px">
+                                                <i class="far fa-bookmark book-rekomen-active" onclick="delete_bookmark(<?= $l->id_playlist ?>);"></i>
                                                 <i class="far fa-heart heart-rekomen"></i>
                                             </div>
                                             <div class="col-2 ">
-                                                <button type="button" class="btn see-more1" onclick="location.href='/detail-playlist'">See More</button>
+                                                <button type="button" class="btn see-more1" onclick="location.href='/detail-playlist/<?= $l->id_playlist ?>';">See More</button>
                                             </div>
 
                                         </div>
@@ -50,149 +54,11 @@
                                 </div>
                             </div>
 
-                            <!-- END 1-->
+                            <!-- END 1 -->
 
-                            <div class="col-md-6">
-                                <div class="row bookmarked-img">
-                                    <div class="col-lg-6 col-xl-6">
-                                        <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail1 mx-auto d-block" alt="...">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="card-body" style="padding-left:0;">
-                                            <div style="display: inline-block">
-                                                <p class="judul-rekomen"><b>Biologi - DNA</b></p>
+                            <?php endforeach; ?>
 
-                                                <p class="views-rekomen">200.000.000 Views</p>
-
-                                            </div>
-                                            <div style="display:inline-block; margin-left: 20px; vertical-align: top; margin-top: 12px">
-                                                <i class="far fa-bookmark book-rekomen"></i>
-                                                <i class="far fa-heart heart-rekomen"></i>
-                                            </div>
-                                            <div class="col-2 ">
-                                                <button type="button" class="btn see-more1" onclick="location.href='/detail-playlist'">See More</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 2 -->
-
-                            <div class="col-md-6">
-                                <div class="row bookmarked-img">
-                                    <div class="col-lg-6 col-xl-6">
-                                        <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail1 mx-auto d-block" alt="...">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="card-body" style="padding-left:0;">
-                                            <div style="display: inline-block">
-                                                <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-
-                                                <p class="views-rekomen">200.000.000 Views</p>
-
-                                            </div>
-                                            <div style="display:inline-block; margin-left: 20px; vertical-align: top; margin-top: 12px">
-                                                <i class="far fa-bookmark book-rekomen"></i>
-                                                <i class="far fa-heart heart-rekomen"></i>
-                                            </div>
-                                            <div class="col-2 ">
-                                                <button type="button" class="btn see-more1" onclick="location.href='/detail-playlist'">See More</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 3 -->
-
-                            <div class="col-md-6">
-                                <div class="row bookmarked-img">
-                                    <div class="col-lg-6 col-xl-6">
-                                        <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail1 mx-auto d-block" alt="...">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="card-body" style="padding-left:0;">
-                                            <div style="display: inline-block">
-                                                <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-
-                                                <p class="views-rekomen">200.000.000 Views</p>
-
-                                            </div>
-                                            <div style="display:inline-block; margin-left: 20px; vertical-align: top; margin-top: 12px">
-                                                <i class="far fa-bookmark book-rekomen"></i>
-                                                <i class="far fa-heart heart-rekomen"></i>
-                                            </div>
-                                            <div class="col-2 ">
-                                                <button type="button" class="btn see-more1" onclick="location.href='/detail-playlist'">See More</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 4 -->
-
-                            <div class="col-md-6">
-                                <div class="row bookmarked-img">
-                                    <div class="col-lg-6 col-xl-6">
-                                        <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail1 mx-auto d-block" alt="...">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="card-body" style="padding-left:0;">
-                                            <div style="display: inline-block">
-                                                <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-
-                                                <p class="views-rekomen">200.000.000 Views</p>
-
-                                            </div>
-                                            <div style="display:inline-block; margin-left: 20px; vertical-align: top; margin-top: 12px">
-                                                <i class="far fa-bookmark book-rekomen"></i>
-                                                <i class="far fa-heart heart-rekomen"></i>
-                                            </div>
-                                            <div class="col-2 ">
-                                                <button type="button" class="btn see-more1" onclick="location.href='/detail-playlist'">See More</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 5 -->
-
-                            <div class="col-md-6">
-                                <div class="row bookmarked-img">
-                                    <div class="col-lg-6 col-xl-6">
-                                        <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail1 mx-auto d-block" alt="...">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="card-body" style="padding-left:0;">
-                                            <div style="display: inline-block">
-                                                <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-
-                                                <p class="views-rekomen">200.000.000 Views</p>
-
-                                            </div>
-                                            <div style="display:inline-block; margin-left: 20px; vertical-align: top; margin-top: 12px">
-                                                <i class="far fa-bookmark book-rekomen"></i>
-                                                <i class="far fa-heart heart-rekomen"></i>
-                                            </div>
-                                            <div class="col-2 ">
-                                                <button type="button" class="btn see-more1" onclick="location.href='/detail-playlist'">See More</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 6 -->
-
-                            <!-- BOOKMARKED SECTION END -->
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

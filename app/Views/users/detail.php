@@ -1,4 +1,4 @@
-<?= $this->extend('layout/templates'); ?>
+<?= $this->extend('layout/detail_templates'); ?>
 
 <?= $this->section('content'); ?>
 
@@ -17,7 +17,7 @@
             <!-- BANNER DETAIL IMAGE -->
 
             <div class="col-12 col-md-6">
-                <img class="image-detail img-fluid" src="<?= base_url() ?>/assets/img/3255539.jpg" alt="">
+                <img class="image-detail img-fluid" src="<?= $base_api_url ?>/files/profile/<?= $data_playlist->profile_pict ?>" alt="">
             </div>
 
             <div class="col-12 col-md-6">
@@ -26,13 +26,13 @@
                     <!-- BANNER DETAIL JUDUL -->
 
                     <div class="col-12">
-                        <h1 class="text-detail">Biologi - DNA</h1>
+                        <h1 class="text-detail"><?= $data_playlist->nama_playlist ?></h1>
                     </div>
 
                     <!-- BANNER DETAIL DESKRIPSI -->
 
                     <div class="col-12">
-                        <p class="text-detail-des">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit nisi sed sollicitudin pellentesque. Nunc posuere purus rhoncus pulvinar aliquam. Ut aliquet tristique nisl vitae volutpat.</p>
+                        <p class="text-detail-des"><?= $data_playlist->deskripsi ?></p>
                     </div>
 
                     <!-- BANNER DETAIL VIEWS AND SEE -->
@@ -50,7 +50,7 @@
                             <i class="far fa-eye"></i>
                         </div>
                         <div class="col-12">
-                            <p class="likes">1.000.000 Views</p>
+                            <p class="likes"><?= $data_playlist->views ?> Views</p>
                         </div>
                     </div>
                 </div>
@@ -60,17 +60,29 @@
 
             <!-- VIEWS CONTENT SECTION-->
 
-            <?php if ($category == 'catatan'): ?>
+            <?php if ($content): ?>
 
-            <?= $this->include('konten_playlist/catatan'); ?>
-
-            <?php elseif ($category == 'diskusi_pr' || $category == 'link_referensi'): ?>
+            <?php if ($category == 1): ?>
 
             <?= $this->include('konten_playlist/iframe'); ?>
 
-            <?php elseif ($category == 'youtube'): ?>
+            <?php elseif ($category == 2): ?>
+
+            <?= $this->include('konten_playlist/catatan'); ?>
+
+            <?php elseif ($category == 3): ?>
+
+            <?= $this->include('konten_playlist/iframe') ?>
+
+            <?php elseif ($category == 4): ?>
+
+            <?= $this->include('konten_playlist/video') ?>
+
+            <?php elseif ($category == 5): ?>
 
             <?= $this->include('konten_playlist/youtube') ?>
+
+            <?php endif; ?>
 
             <?php endif; ?>
 
@@ -85,159 +97,37 @@
             <!-- KONTEN -->
 
             <!-- START -->
+            
+            <?php if ($materi): ?>
+
+            <?php $index = 0; foreach ($materi as $konten): $index++; ?>
 
             <div class="col-2 col-md-2">
-                <div class="number">
-                    <b>1</b>
+                <div class="number<?php if($current_uri == $konten->id_materi): ?>-active<?php endif; ?>">
+                    <b><?= $index ?></b>
                 </div>
             </div>
 
             <div class="col-10 col-md-10">
-                <div class="text-daftar-konten">
-                    <p>Diskusi PR - Biologi DNA</p>
+                <div class="text-daftar-konten<?php if($current_uri == $konten->id_materi): ?>-active<?php endif; ?>"
+                    onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $data_playlist->id_playlist ?>/<?= $konten->id_materi ?>';">
+                    <p><?= $konten->nama_materi ?></p>
                 </div>
             </div>
 
             <!-- END 1 -->
 
-            <div class="col-2 col-md-2">
-                <div class="number-active">
-                    <b>2</b>
-                </div>
-            </div>
+            <?php endforeach; ?>
+
+            <?php else: ?>
 
             <div class="col-10 col-md-10">
-                <div class="text-daftar-konten-active">
-                    <p>Catatan - Biologi DNA</p>
-                </div>
+                <p>Belum ada materi</p>
             </div>
 
-            <!-- END 2 -->
-
-            <div class="col-2 col-md-2">
-                <div class="number">
-                    <b>3</b>
-                </div>
-            </div>
-
-            <div class="col-10 col-md-10">
-                <div class="text-daftar-konten">
-                    <p>Link Referensi - Biologi DNA</p>
-                </div>
-            </div>
-
-            <div class="col-2 col-md-2">
-                <div class="number">
-                    <b>4</b>
-                </div>
-            </div>
-
-            <!-- END 3 -->
-
-            <div class="col-10 col-md-10">
-                <div class="text-daftar-konten">
-                    <p>Video - Biologi DNA</p>
-                </div>
-            </div>
-
-            <!-- END 4 -->
+            <?php endif; ?>
 
             <!-- PLAYLIST CONTENT SECTION END -->
-
-            <!-- DETAIL REKOMENDASI SECTION -->
-
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-12">
-                        <h5 style="margin: 30px 0;">Rekomendasi</h5>
-                    </div>
-
-                    <!-- START -->
-
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="rekomen-img">
-                            <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-                                </div>
-                                <div class="col-12">
-                                    <p class="views-rekomen">200.000.000 Views</p>
-                                </div>
-                                <div class="col-12">
-                                    <i class="far fa-bookmark book-rekomen"></i>
-                                    <i class="far fa-heart heart-rekomen"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- END 1 -->
-
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="rekomen-img">
-                            <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-                                </div>
-                                <div class="col-12">
-                                    <p class="views-rekomen">200.000.000 Views</p>
-                                </div>
-                                <div class="col-12">
-                                    <i class="far fa-bookmark book-rekomen"></i>
-                                    <i class="far fa-heart heart-rekomen"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- END 2 -->
-
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="rekomen-img">
-                            <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-                                </div>
-                                <div class="col-12">
-                                    <p class="views-rekomen">200.000.000 Views</p>
-                                </div>
-                                <div class="col-12">
-                                    <i class="far fa-bookmark book-rekomen"></i>
-                                    <i class="far fa-heart heart-rekomen"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- END 3 -->
-
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="rekomen-img">
-                            <img src="<?= base_url() ?>/assets/img/hero_img.png" class="img-thumbnail" alt="...">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="judul-rekomen"><b>Biologi - DNA</b></p>
-                                </div>
-                                <div class="col-12">
-                                    <p class="views-rekomen">200.000.000 Views</p>
-                                </div>
-                                <div class="col-12">
-                                    <i class="far fa-bookmark book-rekomen"></i>
-                                    <i class="far fa-heart heart-rekomen"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- END 4 -->
-
-                </div>
-            </div>
-
-            <!-- DETAIL REKOMENDASI SECTION END -->
         </div>
     </div>
 </div>

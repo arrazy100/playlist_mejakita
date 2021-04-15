@@ -35,12 +35,17 @@
 
                         <div class="col-12 btn-bookmarked">
                             <div class="row float-md-right">
+                                <?php if ($user): ?>
+
                                 <div class="col">
                                     <button class="btn btn-bookmark" onclick="window.location.href='<?= base_url() ?>/bookmarked';">Dashboard</button>
                                 </div>
+
                                 <div class="col">
                                     <button class="btn btn-bookmark" onclick="window.location.href='<?= base_url() ?>/bookmarked';">Bookmarked</button>
                                 </div>
+
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -55,6 +60,8 @@
 
                 <!-- REKOMENDASI SECTION -->
 
+                <input type="hidden" id="protection_token" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
+
                     <div class="col-12 col-lg-8" id="rekomendasi">
                         <div class="row">
                             <div class="col-12">
@@ -62,50 +69,49 @@
                             </div>
 
                             <!-- START -->
+                            <?php if ($daftar_rekomendasi): ?>
+
                             <?php foreach($daftar_rekomendasi as $rekomendasi):?>
 
                             <div class="col-12 col-sm-6 col-xl-4">
-                                <div class="rekomen-img" onclick="window.location.href='<?= base_url() ?>/detail-playlist';">
-                                    <img src="<?= $rekomendasi->url ?>" class="img-thumbnail" alt="...">
+                                <div class="rekomen-img" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $rekomendasi->id_playlist ?>';">
+                                    <img src="<?= $base_api_url ?>/files/profile/<?= $rekomendasi->profile_pict ?>" class="img-thumbnail" alt="...">
                                     <div class="row">
                                         <div class="col-12">
-                                            <p class="judul-rekomen text-truncate"><b><?= $rekomendasi->title ?></b></p>
+                                            <p class="judul-rekomen text-truncate"><b><?= $rekomendasi->nama_playlist ?></b></p>
                                         </div>
                                         <div class="col-12">
-                                            <p class="views-rekomen">200.000.000 Views</p>
+                                            <p class="views-rekomen"><?= $rekomendasi->views?> Views</p>
                                         </div>
+
+                                        <?php if ($user): ?>
+
                                         <div class="col-12">
-                                            <i class="far fa-bookmark book-rekomen" onclick="event.stopPropagation(); alert('book');"></i>
-                                            <i class="far fa-heart heart-rekomen" onclick="event.stopPropagation(); alert('heart');"></i>
+                                            <i class="far fa-bookmark 
+                                                book-rekomen<?php if ($rekomendasi->marked_at): ?>-active<?php endif; ?>
+                                                book-<?= $rekomendasi->id_playlist ?>"
+                                                onclick="event.stopPropagation(); <?php if ($rekomendasi->marked_at): ?>delete_bookmark(<?= $rekomendasi->id_playlist ?>);<?php else: ?>add_bookmark(<?= $rekomendasi->id_playlist ?>);<?php endif; ?>">
+                                            </i>
+                                            <i class="far fa-heart heart-rekomen"
+                                                onclick="event.stopPropagation(); alert('heart');"></i>
                                         </div>
+
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
 
-                            <?php endforeach;?>
+                            <?php endforeach; ?>
 
-                            <!-- END -->
+                            <?php else: ?>
 
-                            <!-- PAGINATION SECTION -->
-
-                            <div class="col-12">
-                                <nav aria-label="Page navigation example" style="margin: 30px 0;">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <?php for ($i = 1; $i < $n_pages; $i++):?>
-
-                                        <li class="page-item"><a class="page-link" href="<?= base_url() ?>/?page=<?= $i ?>"><?= $i ?></a></li>
-
-                                        <?php endfor ?>
-                                    </ul>
-                                </nav>
+                            <div class="col-12 col-sm-6 col-xl-4">
+                                <p>Belum ada rekomendasi</p>
                             </div>
 
-                            <!-- PAGINATION SECTION END --> 
+                            <?php endif; ?>
+
+                            <!-- END -->
                         </div>
                     </div>
 
@@ -119,24 +125,18 @@
                             <div class="col-12">
                                 <h5>Kategori</h5>
                             </div>
+
+                            <?php if($kategori): ?>
+
+                            <?php foreach($kategori as $k): ?>
+
                             <div class="col-12 col-sm-6">
-                                <button type="button" class="btn btn-block btn-primary btn-kategori">Biologi</button>
+                                <button type="button" class="btn btn-block btn-primary btn-kategori text-truncate"><?= $k ?></button>
                             </div>
-                            <div class="col-12 col-sm-6">
-                                <button type="button" class="btn btn-block btn-primary btn-kategori">Biologi</button>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <button type="button" class="btn btn-block btn-primary btn-kategori">Biologi</button>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <button type="button" class="btn btn-block btn-primary btn-kategori">Biologi</button>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <button type="button" class="btn btn-block btn-primary btn-kategori">Biologi</button>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <button type="button" class="btn btn-block btn-primary btn-kategori text-truncate">Bahasa Indonesia</button>
-                            </div>
+
+                            <?php endforeach; ?>
+
+                            <?php endif; ?>
 
                             <!-- KATEGORI SECTION END -->
 
@@ -147,28 +147,45 @@
                             </div>
 
                             <!-- START -->
+
+                            <?php if ($top_playlist): ?>
+                            <?php foreach($top_playlist as $top): ?>
                             
                             <div class="col-3 col-lg-4">
                                 <div class="top-playlist">
-                                    <img class="img-fluid" src="<?= base_url() ?>/assets/img/hero_img.png" alt="">
+                                    <img class="img-fluid" src="<?= $base_api_url ?>/files/profile/<?= $top->profile_pict ?>" alt="">
                                 </div>
                             </div>
                             <div class="col-9 col-lg-8 d-flex align-items-center">
                                 <div class="row">
-                                    <div class="col-10">
-                                        <a class="card-detail" href="<?= base_url() ?>/detail-playlist">
-                                            <p class="judul-top-playlist">
-                                                <b>Biologi - DNA</b>
+                                    <div class="col-10" style="width: 90px;">
+                                        <a class="card-detail">
+                                            <p class="judul-top-playlist text-truncate" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $rekomendasi->id_playlist ?>';">
+                                                <b><?= $top->nama_playlist ?></b>
                                             </p>    
                                         </a>
-                                        <p class="views-top-playlist">200.000.000 Views</p>
+                                        <p class="views-top-playlist"><?= $top->views ?> Views</p>
                                     </div>
+
                                     <div class="col-2 d-flex" style="margin-left: -30px;">
+
                                         <div class="col">
+                                            <?php if ($user): ?>
+                                            
                                             <i class="far fa-heart heart-top-playlist"></i>
+
+                                            <?php endif; ?>
                                         </div>
                                         <div class="col">
-                                            <i class="far fa-bookmark book-top-playlist"></i>
+                                            <?php if ($user): ?>
+
+                                            <i class="far fa-bookmark 
+                                                book-top-playlist<?php if ($top->marked_at): ?>-active<?php endif; ?>
+                                                book-<?= $top->id_playlist ?>"
+                                                onclick="event.stopPropagation(); <?php if ($top->marked_at): ?>delete_bookmark(<?= $top->id_playlist ?>);<?php else: ?>add_bookmark(<?= $rekomendasi->id_playlist ?>);<?php endif; ?>">
+                                            </i>
+
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -176,61 +193,8 @@
 
                             <!-- END 1 -->
 
-                            <div class="col-3 col-lg-4">
-                                <div class="top-playlist">
-                                    <img class="img-fluid" src="<?= base_url() ?>/assets/img/hero_img.png" alt="">
-                                </div>
-                            </div>
-                            <div class="col-9 col-lg-8 d-flex align-items-center">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <a class="card-detail" href="<?= base_url() ?>/detail-playlist">
-                                            <p class="judul-top-playlist">
-                                                <b>Biologi - DNA</b>
-                                            </p>    
-                                        </a>
-                                        <p class="views-top-playlist">200.000.000 Views</p>
-                                    </div>
-                                    <div class="col-2 d-flex" style="margin-left: -30px;">
-                                        <div class="col">
-                                            <i class="far fa-heart heart-top-playlist"></i>
-                                        </div>
-                                        <div class="col">
-                                            <i class="far fa-bookmark book-top-playlist"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 2 -->
-
-                            <div class="col-3 col-lg-4">
-                                <div class="top-playlist">
-                                    <img class="img-fluid" src="<?= base_url() ?>/assets/img/hero_img.png" alt="">
-                                </div>
-                            </div>
-                            <div class="col-9 col-lg-8 d-flex align-items-center">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <a class="card-detail" href="<?= base_url() ?>/detail-playlist">
-                                            <p class="judul-top-playlist">
-                                                <b>Biologi - DNA</b>
-                                            </p>    
-                                        </a>
-                                        <p class="views-top-playlist">200.000.000 Views</p>
-                                    </div>
-                                    <div class="col-2 d-flex" style="margin-left: -30px;">
-                                        <div class="col">
-                                            <i class="far fa-heart heart-top-playlist"></i>
-                                        </div>
-                                        <div class="col">
-                                            <i class="far fa-bookmark book-top-playlist"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- END 3 -->
+                            <?php endforeach; ?>
+                            <?php endif; ?>
 
                         </div>
                     </div>
@@ -249,15 +213,19 @@
                             <div class="col-12 col-lg-6 d-flex justify-content-center">
                                 <div id="playlist-carousel" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="<?= base_url() ?>/assets/img/hero_img.png" class="w-100" alt="...">
+                                        <?php if($random_list): ?>
+
+                                        <div class="carousel-item active" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $terbaru[$random_list[0]]->id_playlist ?>';">
+                                            <img src="<?= $base_api_url ?>/files/profile/<?= $terbaru[$random_list[0]]->profile_pict ?>" class="w-100" alt="...">
                                         </div>
-                                        <div class="carousel-item">
-                                            <img src="<?= base_url() ?>/assets/img/profile-default.png" class="w-100" alt="...">
+                                        <div class="carousel-item" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $terbaru[$random_list[1]]->id_playlist ?>';">
+                                            <img src="<?= $base_api_url ?>/files/profile/<?= $terbaru[$random_list[1]]->profile_pict ?>" class="w-100" alt="...">
                                         </div>
-                                        <div class="carousel-item">
-                                            <img src="<?= base_url() ?>/assets/img/profile-default.png" class="w-100" alt="...">
+                                        <div class="carousel-item" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $terbaru[$random_list[0]]->id_playlist ?>';">
+                                            <img src="<?= $base_api_url ?>/files/profile/<?= $terbaru[$random_list[2]]->profile_pict ?>" class="w-100" alt="...">
                                         </div>
+
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -312,52 +280,34 @@
                                             <h5>Biologi</h5>
                                         </div>
                                         <div class="col-12 scrollable-list" id="content-list">
-                                            <div class="content-item">
+                                            <?php if($terbaru):?>
+                                            <?php foreach($terbaru as $l):?>
+
+                                            <div class="content-item" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $rekomendasi->id_playlist ?>';">
                                                 <div class="col">
-                                                    <p class="content-item-title">Playlist Belajar untuk Persiapan UTS Biologi</p>
+                                                    <p class="content-item-title text-truncate"><?= $l->nama_playlist ?></p>
                                                 </div>
                                                 <div class="col">
-                                                    <p class="content-item-date">Februari 2021</p>
+                                                    <p class="content-item-date"><?= $l->created_at ?></p>
                                                 </div>
                                                 <div class="col">
-                                                    <p class="content-item-views">1.000.000 Views</p>
+                                                    <p class="content-item-views"><?= $l->views ?> Views</p>
                                                 </div>
                                             </div>
 
                                             <!-- END 1 -->
 
-                                            <div class="content-item">
-                                                <div class="col">
-                                                    <p class="content-item-title">Playlist Belajar untuk Persiapan UTS Biologi</p>
-                                                </div>
-                                                <div class="col">
-                                                    <p class="content-item-date">Februari 2021</p>
-                                                </div>
-                                                <div class="col">
-                                                    <p class="content-item-views">1.000.000 Views</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- END 2 -->
-
-                                            <div class="content-item">
-                                                <div class="col">
-                                                    <p class="content-item-title">Playlist Belajar untuk Persiapan UTS Biologi</p>
-                                                </div>
-                                                <div class="col">
-                                                    <p class="content-item-date">Februari 2021</p>
-                                                </div>
-                                                <div class="col">
-                                                    <p class="content-item-views">1.000.000 Views</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- END 3 -->
+                                            <?php endforeach;?>
+                                            <?php endif;?>
 
                                         </div>
 
                                         <div class="col-12 view-more">
+                                            <?php if(count($terbaru) > 2): ?>
+
                                             <p onclick="toggleScroll();">View More</p>
+
+                                            <?php endif;?>
                                         </div>
                                     </div>
                                 </div>

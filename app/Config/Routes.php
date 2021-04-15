@@ -32,9 +32,12 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Users::index');
-$routes->get('/detail-playlist', 'Users::detail');
+$routes->get('/detail-playlist/(:num)', 'Users::detail/$1');
+$routes->get('/detail-playlist/(:num)/(:num)', 'Users::detail_konten/$1/$2');
 $routes->get('/bookmarked', 'Users::bookmarked');
-$routes->get('/tes', 'Users::tes');
+
+$routes->post('/add-bookmark/(:num)', 'Users::add_bookmark/$1');
+$routes->post('/delete-bookmark/(:num)', 'Users::delete_bookmark/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

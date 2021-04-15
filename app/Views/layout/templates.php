@@ -21,20 +21,69 @@
 
     <?= $this->renderSection('content'); ?>
 
+    <script src="<?= base_url() ?>/assets/bootstrap/js/bootstrap.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
     <script>
         function toggleScroll() {
             document.getElementById("content-list").classList.toggle("scroll-active");
         };
 
-        const field = 'page';
-        const url = window.location.href;
-        if (url.indexOf('?' + field + '=')) {
-            document.getElementById("rekomendasi").scrollIntoView();
+        function add_bookmark(id) {
+            var csrfName = $("#protection_token").attr('name');
+            var csrfHash = $("#protection_token").val();
+
+            $.ajax({
+                url: "<?= base_url() ?>/add-bookmark/" + id,
+                method: 'post',
+                data: { [csrfName]: csrfHash },
+                dataType: 'json',
+                success: function(response) {
+                    $("#protection_token").val(response.token);
+
+                    if (response.success) {
+                        const el = document.querySelectorAll('.book-' + id);
+                        for (var i = 0; i < el.length; i++) {
+                            el[i].classList.replace("book-rekomen", "book-rekomen-active");
+                            el[i].classList.replace("book-top-playlist", "book-top-playlist-active");
+                            el[i].setAttribute('onclick', 'event.stopPropagation(); delete_bookmark(' + id + ');');
+                        }
+                    }
+                    else {
+                        alert("Add to bookmarked failed");
+                    }
+                }
+            });
+        }
+
+        function delete_bookmark(id) {
+            var csrfName = $("#protection_token").attr('name');
+            var csrfHash = $("#protection_token").val();
+
+            $.ajax({
+                url: "<?= base_url() ?>/delete-bookmark/" + id,
+                method: 'post',
+                data: { [csrfName]: csrfHash },
+                dataType: 'json',
+                success: function(response) {
+                    $("#protection_token").val(response.token);
+
+                    if (response.success) {
+                        const el = document.querySelectorAll('.book-' + id);
+                        for (var i = 0; i < el.length; i++) {
+                            el[i].classList.replace("book-rekomen-active", "book-rekomen");
+                            el[i].classList.replace("book-top-playlist-active", "book-top-playlist");
+                            el[i].setAttribute('onclick', 'event.stopPropagation(); add_bookmark(' + id + ');');
+                        }
+                    }
+                    else {
+                        alert("Delete from bookmarked failed");
+                    }
+                }
+            });
         }
     </script>
 
-    <script src="<?= base_url() ?>/assets/bootstrap/js/bootstrap.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </body>
 
 </html>
