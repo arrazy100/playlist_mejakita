@@ -29,28 +29,43 @@
             document.getElementById("content-list").classList.toggle("scroll-active");
         };
 
+        <?php if ($user): ?>
+
         function add_bookmark(id) {
-            var csrfName = $("#protection_token").attr('name');
-            var csrfHash = $("#protection_token").val();
+            const csrfName = $("#protection_token").attr('name');
+            const csrfHash = $("#protection_token").val();
 
             $.ajax({
                 url: "<?= base_url() ?>/add-bookmark/" + id,
                 method: 'post',
                 data: { [csrfName]: csrfHash },
                 dataType: 'json',
+                beforeSend: function() {
+                    const el = document.querySelectorAll('.book-' + id);
+                    for (let i = 0; i < el.length; i++) {
+                        el[i].setAttribute('onclick', 'event.stopPropagation();');
+                    }
+                },
                 success: function(response) {
                     $("#protection_token").val(response.token);
 
                     if (response.success) {
                         const el = document.querySelectorAll('.book-' + id);
-                        for (var i = 0; i < el.length; i++) {
+                        for (let i = 0; i < el.length; i++) {
                             el[i].classList.replace("book-rekomen", "book-rekomen-active");
                             el[i].classList.replace("book-top-playlist", "book-top-playlist-active");
                             el[i].setAttribute('onclick', 'event.stopPropagation(); delete_bookmark(' + id + ');');
                         }
+
+                        $("#added-success").show().delay(2000).fadeOut();
                     }
                     else {
-                        alert("Add to bookmarked failed");
+                        const el = document.querySelectorAll('.book-' + id);
+                        for (let i = 0; i < el.length; i++) {
+                            el[i].setAttribute('onclick', 'event.stopPropagation(); add_bookmark(' + id + ');');
+                        }
+
+                        $("#added-fail").show().delay(2000).fadeOut();
                     }
                 }
             });
@@ -65,6 +80,12 @@
                 method: 'post',
                 data: { [csrfName]: csrfHash },
                 dataType: 'json',
+                beforeSend: function() {
+                    const el = document.querySelectorAll('.book-' + id);
+                    for (let i = 0; i < el.length; i++) {
+                        el[i].setAttribute('onclick', 'event.stopPropagation();');
+                    }
+                },
                 success: function(response) {
                     $("#protection_token").val(response.token);
 
@@ -75,13 +96,22 @@
                             el[i].classList.replace("book-top-playlist-active", "book-top-playlist");
                             el[i].setAttribute('onclick', 'event.stopPropagation(); add_bookmark(' + id + ');');
                         }
+
+                        $("#deleted-success").show().delay(2000).fadeOut();
                     }
                     else {
-                        alert("Delete from bookmarked failed");
+                        const el = document.querySelectorAll('.book-' + id);
+                        for (let i = 0; i < el.length; i++) {
+                            el[i].setAttribute('onclick', 'event.stopPropagation(); delete_bookmark(' + id + ');');
+                        }
+
+                        $("#deleted-fail").show().delay(2000).fadeOut();
                     }
                 }
             });
         }
+
+        <?php endif; ?>
     </script>
 
 </body>

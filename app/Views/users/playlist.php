@@ -68,6 +68,22 @@
                                 <h5>Rekomendasi</h5>
                             </div>
 
+                            <div id="added-success" class="alert alert-success col-12" role="alert" style="display: none; font-size: 12px;">
+                                Added to Bookmark
+                            </div>
+
+                            <div id="added-fail" class="alert alert-danger col-12" role="alert" style="display: none; font-size: 12px;">
+                                Add to Bookmark Failed
+                            </div>
+
+                            <div id="deleted-success" class="alert alert-success col-12" role="alert" style="display: none; font-size: 12px;">
+                                Deleted from Bookmark
+                            </div>
+
+                            <div id="deleted-fail" class="alert alert-danger col-12" role="alert" style="display: none; font-size: 12px;">
+                                Delete from Bookmark Failed
+                            </div>
+
                             <!-- START -->
                             <?php if ($daftar_rekomendasi): ?>
 
@@ -203,7 +219,7 @@
 
                     <!-- TERBARU SECTION -->
 
-                    <div class="container" style="margin-bottom: 300px;">
+                    <div class="container" style="margin-bottom: 300px; margin-top: 50px;">
                         <div class="row">
                             <div class="col-12">
                                 <h5 style="margin: 20px 0 10px 0;">Terbaru</h5>
@@ -276,10 +292,7 @@
                                     </div>
 
                                     <div class="col-12 terbaru-list" style="background-color: #4da8da;">
-                                        <div class="col-12" style="color: #fff;">
-                                            <h5>Biologi</h5>
-                                        </div>
-                                        <div class="col-12 scrollable-list" id="content-list">
+                                        <div class="col-12 scrollable-list" id="content-list" style="margin-top: 20px;">
                                             <?php if($terbaru):?>
                                             <?php foreach($terbaru as $l):?>
 
