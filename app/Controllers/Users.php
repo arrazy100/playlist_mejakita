@@ -96,6 +96,37 @@ class Users extends BaseController
 		return view('users/playlist', $data);
 	}
 
+	public function filter_playlist($kategori = null)
+	{
+		$id_akun = $this->id_akun;
+
+		// Read JSON Data
+		$result = self::requestAPI($this->base_API.'index_playlist/'.$id_akun);
+		$result = json_decode($result);
+
+		// Daftar Rekomendasi
+		$daftar_rekomendasi = (array)$result;
+		$daftar_rekomendasi = array_filter($daftar_rekomendasi, function($daftar){
+			foreach($daftar as $item) {
+				if ($item->kategori == $kategori) return true;
+			}
+		});
+		for ($i = 0; $i < count($daftar_rekomendasi); $i++)
+		{
+			$daftar_rekomendasi[$i]->rating = $daftar_rekomendasi[$i]->views;
+			if (property_exists($daftar_rekomendasi[$i], 'bookmarked_count'))
+				$daftar_rekomendasi[$i]->rating += $daftar_rekomendasi[$i]->bookmarked_count;
+		}
+		usort($daftar_rekomendasi, array($this, 'sortByRating'));
+		$daftar_rekomendasi = (object)array_slice($daftar_rekomendasi, 0, 6);
+
+		$data = [
+			'daftar_rekomendasi' => $daftar_rekomendasi,
+		];
+
+		return view('users/refresh_playlist', $data);
+	}
+
 	public function add_bookmark($id_playlist = null)
 	{
 		// Id Akun

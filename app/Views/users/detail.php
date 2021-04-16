@@ -37,15 +37,7 @@
 
                     <!-- BANNER DETAIL VIEWS AND SEE -->
 
-                    <div class="col-12 col-md-6 d-flex">
-                        <div class="col">
-                            <i class="far fa-heart heart-detail"></i>
-                        </div>
-                        <div class="col-12">
-                            <p class="likes">1.000.000 Likes</p>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 d-flex">
+                    <div class="col-12 d-flex">
                         <div class="col">
                             <i class="far fa-eye"></i>
                         </div>

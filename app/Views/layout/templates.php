@@ -111,6 +111,29 @@
             });
         }
 
+        function filter_kategori(kategori) {
+            var csrfName = $("#protection_token").attr('name');
+            var csrfHash = $("#protection_token").val();
+
+            $.ajax({
+                url: "<?= base_url() ?>/filter-playlist/" + kategori,
+                method: 'get',
+                data: { [csrfName]: csrfHash },
+                dataType: 'json',
+                success: function(response) {
+                    $("#protection_token").val(response.token);
+
+                    if (response.success) {
+                        $("#rekomendasi").empty();
+                        $("#rekomendasi").append(response);
+                    }
+                    else {
+                        
+                    }
+                }
+            });
+        }
+
         <?php endif; ?>
     </script>
 

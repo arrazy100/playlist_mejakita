@@ -43,7 +43,6 @@
                                             </div>
                                             <div style="display: inline-block; margin-left: 20px; vertical-align: top; margin-top: 12px">
                                                 <i class="far fa-bookmark book-rekomen-active" onclick="delete_bookmark(<?= $l->id_playlist ?>);"></i>
-                                                <i class="far fa-heart heart-rekomen"></i>
                                             </div>
                                             <div class="col-2 ">
                                                 <button type="button" class="btn see-more1" onclick="location.href='/detail-playlist/<?= $l->id_playlist ?>';">See More</button>

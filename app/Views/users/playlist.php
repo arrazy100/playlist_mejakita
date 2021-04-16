@@ -102,14 +102,13 @@
 
                                         <?php if ($user): ?>
 
-                                        <div class="col-12">
+                                        <div class="col-12" style="margin-bottom: 10px;">
                                             <i class="far fa-bookmark 
                                                 book-rekomen<?php if ($rekomendasi->marked_at): ?>-active<?php endif; ?>
                                                 book-<?= $rekomendasi->id_playlist ?>"
                                                 onclick="event.stopPropagation(); <?php if ($rekomendasi->marked_at): ?>delete_bookmark(<?= $rekomendasi->id_playlist ?>);<?php else: ?>add_bookmark(<?= $rekomendasi->id_playlist ?>);<?php endif; ?>">
                                             </i>
-                                            <i class="far fa-heart heart-rekomen"
-                                                onclick="event.stopPropagation(); alert('heart');"></i>
+                                            
                                         </div>
 
                                         <?php endif; ?>
@@ -147,7 +146,7 @@
                             <?php foreach($kategori as $k): ?>
 
                             <div class="col-12 col-sm-6">
-                                <button type="button" class="btn btn-block btn-primary btn-kategori text-truncate"><?= $k ?></button>
+                                <button type="button" class="btn btn-block btn-primary btn-kategori text-truncate" onclick=""><?= $k ?></button>
                             </div>
 
                             <?php endforeach; ?>
@@ -184,14 +183,6 @@
                                     </div>
 
                                     <div class="col-2 d-flex" style="margin-left: -30px;">
-
-                                        <div class="col">
-                                            <?php if ($user): ?>
-                                            
-                                            <i class="far fa-heart heart-top-playlist"></i>
-
-                                            <?php endif; ?>
-                                        </div>
                                         <div class="col">
                                             <?php if ($user): ?>
 
