@@ -37,11 +37,9 @@
 
                     <!-- BANNER DETAIL VIEWS AND SEE -->
 
-                    <div class="col-12 d-flex">
-                        <div class="col">
-                            <i class="far fa-eye"></i>
-                        </div>
-                        <div class="col-12">
+                    <div class="col-12">
+                        <div class="col-12 d-flex justify-content-center">
+                            <i class="far fa-eye" style="margin-right: 10px;"></i>
                             <p class="likes"><?= $data_playlist->views ?> Views</p>
                         </div>
                     </div>
