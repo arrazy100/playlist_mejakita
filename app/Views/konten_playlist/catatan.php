@@ -15,6 +15,12 @@
 
     <input type="hidden" id="pdf" value="<?= $content; ?>">
 
+    <div style="position: absolute; top: 50%; left: 50%;">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    
     <div id="pdf-container" class="embed-responsive embed-responsive-16by9" style="overflow-y: scroll; overflow-x: scroll;">
         <div id="viewer" class="pdfViewer embed-responsive-item"></div>
     </div>

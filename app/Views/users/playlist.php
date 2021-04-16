@@ -182,7 +182,7 @@
                                             <i class="far fa-bookmark 
                                                 book-top-playlist<?php if ($top->marked_at): ?>-active<?php endif; ?>
                                                 book-<?= $top->id_playlist ?>"
-                                                onclick="event.stopPropagation(); <?php if ($top->marked_at): ?>delete_bookmark(<?= $top->id_playlist ?>);<?php else: ?>add_bookmark(<?= $rekomendasi->id_playlist ?>);<?php endif; ?>">
+                                                onclick="event.stopPropagation(); <?php if ($top->marked_at): ?>delete_bookmark(<?= $top->id_playlist ?>);<?php else: ?>add_bookmark(<?= $top->id_playlist ?>);<?php endif; ?>">
                                             </i>
 
                                             <?php endif; ?>

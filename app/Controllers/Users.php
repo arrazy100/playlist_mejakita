@@ -4,8 +4,11 @@ namespace App\Controllers;
 
 class Users extends BaseController
 {
+	// Global Class Variable
 	private $base_API = 'http://localhost:8081/index.php/';
 	private $base_API_url = 'http://localhost:8081';
+	private $user = true;
+	private $id_akun = 1;
 
 	public function requestAPI($url)
 	{
@@ -37,30 +40,47 @@ class Users extends BaseController
 		return $a->views < $b->views;
 	}
 
+	public function sortByRating($a, $b)
+	{
+		return $a->rating < $b->rating;
+	}
+
 	public function index()
 	{
 		// Is User?
-		$user = true;
+		$user = $this->user;
+		$id_akun = $this->id_akun;
 
 		// Read JSON Data
-		$result = self::requestAPI($this->base_API.'playlistbelajar');
+		$result = self::requestAPI($this->base_API.'index_playlist/'.$id_akun);
 		$result = json_decode($result);
 
-		$kategori = array_unique(array_column($result, 'kategori'));
+		// Kategori
+		$kategori = array_unique(array_column((array)$result, 'kategori'));
 
-		// Daftar Rekomendasi
-		$daftar_rekomendasi = $result;
+		// Sort Playlist By Views
+		$sorted_playlist = (array)$result;
+		usort($sorted_playlist, array($this, 'sortByViews'));
 
 		// Top Playlist
-		$top_playlist = $result;
-		usort($top_playlist, array($this, 'sortByViews'));
-		$top_playlist = array_slice($top_playlist, 0, 3);
+		$top_playlist = array_slice($sorted_playlist, 0, 3);
+
+		// Daftar Rekomendasi
+		$daftar_rekomendasi = $sorted_playlist;
+		for ($i = 0; $i < count($daftar_rekomendasi); $i++)
+		{
+			$daftar_rekomendasi[$i]->rating = $daftar_rekomendasi[$i]->views;
+			if (property_exists($daftar_rekomendasi[$i], 'bookmarked_count'))
+				$daftar_rekomendasi[$i]->rating += $daftar_rekomendasi[$i]->bookmarked_count;
+		}
+		usort($daftar_rekomendasi, array($this, 'sortByRating'));
+		$daftar_rekomendasi = (object)array_slice($daftar_rekomendasi, 0, 6);
 
 		// Terbaru
-		$terbaru = $result;
+		$terbaru = (array)$result;
 
 		// Random Carousel Image
-		$random_list = array_rand($result, 3);
+		$random_list = array_rand((array)$result, 3);
 
 		$data = [
 			'title' => 'Playlist',
@@ -79,7 +99,7 @@ class Users extends BaseController
 	public function add_bookmark($id_playlist = null)
 	{
 		// Id Akun
-		$id_akun = 1;
+		$id_akun = $this->id_akun;
 
 		// Bookmark Data to POST
 		$post_data = [
@@ -108,7 +128,7 @@ class Users extends BaseController
 	public function delete_bookmark($id_playlist = null)
 	{
 		// Id Akun
-		$id_akun = 1;
+		$id_akun = $this->id_akun;
 
 		// Delete bookmark to Database API
 		$result = self::requestAPI($this->base_API.'/delete_bookmarked/'.$id_akun.'/'.$id_playlist);
@@ -239,7 +259,7 @@ class Users extends BaseController
 
 	public function bookmarked()
 	{
-		$id_akun = 1;
+		$id_akun = $this->id_akun;
 		
 		// Read JSON Data
 		$result = self::requestAPI($this->base_API.'list_bookmarked/'.$id_akun);

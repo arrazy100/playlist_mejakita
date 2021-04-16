@@ -8,6 +8,12 @@
     </div>
 
     <div class="embed-responsive embed-responsive-16by9">
+        <div style="position: absolute; top: 50%; left: 50%;">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        
         <iframe src="<?= $content ?>" class="embed-responsive-item" frameborder="0""></iframe>
     </div>
 
