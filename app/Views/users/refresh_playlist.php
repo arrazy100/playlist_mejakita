@@ -45,14 +45,12 @@
 
                 <?php if ($user): ?>
 
-                <div class="col-12">
+                <div class="col-12" style="margin-bottom: 10px;">
                     <i class="far fa-bookmark 
                         book-rekomen<?php if ($rekomendasi->marked_at): ?>-active<?php endif; ?>
                         book-<?= $rekomendasi->id_playlist ?>"
                         onclick="event.stopPropagation(); <?php if ($rekomendasi->marked_at): ?>delete_bookmark(<?= $rekomendasi->id_playlist ?>);<?php else: ?>add_bookmark(<?= $rekomendasi->id_playlist ?>);<?php endif; ?>">
                     </i>
-                    <i class="far fa-heart heart-rekomen"
-                        onclick="event.stopPropagation(); alert('heart');"></i>
                 </div>
 
                 <?php endif; ?>
