@@ -73,7 +73,7 @@
                             </div>
 
                             <div id="added-fail" class="alert alert-danger col-12" role="alert" style="display: none; font-size: 12px;">
-                                Add to Bookmark Failed
+                                Add to Bookmark Failed, REST API Error
                             </div>
 
                             <div id="deleted-success" class="alert alert-success col-12" role="alert" style="display: none; font-size: 12px;">
@@ -81,7 +81,7 @@
                             </div>
 
                             <div id="deleted-fail" class="alert alert-danger col-12" role="alert" style="display: none; font-size: 12px;">
-                                Delete from Bookmark Failed
+                                Delete from Bookmark Failed, REST API Error
                             </div>
 
                             <!-- START -->
@@ -143,13 +143,13 @@
 
                             <?php if($kategori): ?>
 
-                            <?php foreach($kategori as $k): ?>
+                            <?php for($i = 0; $i < count($kategori); $i++): ?>
 
                             <div class="col-12 col-sm-6">
-                                <button type="button" class="btn btn-block btn-primary btn-kategori text-truncate" onclick=""><?= $k ?></button>
+                                <button type="button" class="btn btn-block btn-primary btn-kategori text-truncate" onclick="filter_kategori(this, '<?= $kategori_slug[$i] ?>');"><?= $kategori[$i] ?></button>
                             </div>
 
-                            <?php endforeach; ?>
+                            <?php endfor; ?>
 
                             <?php endif; ?>
 

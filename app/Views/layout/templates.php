@@ -37,24 +37,24 @@
 
             $.ajax({
                 url: "<?= base_url() ?>/add-bookmark/" + id,
-                method: 'post',
+                method: "post",
                 data: { [csrfName]: csrfHash },
-                dataType: 'json',
+                dataType: "json",
                 beforeSend: function() {
-                    const el = document.querySelectorAll('.book-' + id);
+                    const el = document.querySelectorAll(".book-" + id);
                     for (let i = 0; i < el.length; i++) {
-                        el[i].setAttribute('onclick', 'event.stopPropagation();');
+                        el[i].setAttribute("onclick", "event.stopPropagation();");
                     }
                 },
                 success: function(response) {
                     $("#protection_token").val(response.token);
 
                     if (response.success) {
-                        const el = document.querySelectorAll('.book-' + id);
+                        const el = document.querySelectorAll(".book-" + id);
                         for (let i = 0; i < el.length; i++) {
                             el[i].classList.replace("book-rekomen", "book-rekomen-active");
                             el[i].classList.replace("book-top-playlist", "book-top-playlist-active");
-                            el[i].setAttribute('onclick', 'event.stopPropagation(); delete_bookmark(' + id + ');');
+                            el[i].setAttribute("onclick", "event.stopPropagation(); delete_bookmark(' + id + ');");
                         }
 
                         $("#added-success").show().delay(2000).fadeOut();
@@ -62,7 +62,7 @@
                     else {
                         const el = document.querySelectorAll('.book-' + id);
                         for (let i = 0; i < el.length; i++) {
-                            el[i].setAttribute('onclick', 'event.stopPropagation(); add_bookmark(' + id + ');');
+                            el[i].setAttribute("onclick", "event.stopPropagation(); add_bookmark(' + id + ');");
                         }
 
                         $("#added-fail").show().delay(2000).fadeOut();
@@ -111,25 +111,23 @@
             });
         }
 
-        function filter_kategori(kategori) {
+        function filter_kategori(el, kategori) {
             var csrfName = $("#protection_token").attr('name');
             var csrfHash = $("#protection_token").val();
 
+            $(el).attr("disabled", true);
+
             $.ajax({
                 url: "<?= base_url() ?>/filter-playlist/" + kategori,
-                method: 'get',
+                method: 'post',
                 data: { [csrfName]: csrfHash },
                 dataType: 'json',
                 success: function(response) {
                     $("#protection_token").val(response.token);
-
-                    if (response.success) {
-                        $("#rekomendasi").empty();
-                        $("#rekomendasi").append(response);
-                    }
-                    else {
-                        
-                    }
+                    $("#rekomendasi").html(response.html);
+                },
+                complete: function(response) {
+                    $(el).attr("disabled", false);
                 }
             });
         }

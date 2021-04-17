@@ -47,16 +47,20 @@ class Users extends BaseController
 
 	public function index()
 	{
-		// Is User?
-		$user = $this->user;
-		$id_akun = $this->id_akun;
-
 		// Read JSON Data
-		$result = self::requestAPI($this->base_API.'index_playlist/'.$id_akun);
+		$result = self::requestAPI($this->base_API.'index_playlist/'.$this->id_akun);
 		$result = json_decode($result);
 
 		// Kategori
 		$kategori = array_unique(array_column((array)$result, 'kategori'));
+		$kategori = array_values($kategori);
+
+		$kategori_slug = [];
+		foreach($kategori as $k)
+		{
+			$slug = preg_replace('/\s+/', '-', $k);
+			array_push($kategori_slug, $slug);
+		}
 
 		// Sort Playlist By Views
 		$sorted_playlist = (array)$result;
@@ -84,9 +88,10 @@ class Users extends BaseController
 
 		$data = [
 			'title' => 'Playlist',
-			'user' => $user,
+			'user' => $this->user,
 			'base_api_url' => $this->base_API_url,
 			'kategori' => $kategori,
+			'kategori_slug' => $kategori_slug,
 			'daftar_rekomendasi' => $daftar_rekomendasi,
 			'top_playlist' => $top_playlist,
 			'terbaru' => $terbaru,
@@ -98,19 +103,19 @@ class Users extends BaseController
 
 	public function filter_playlist($kategori = null)
 	{
-		$id_akun = $this->id_akun;
-
 		// Read JSON Data
-		$result = self::requestAPI($this->base_API.'index_playlist/'.$id_akun);
+		$result = self::requestAPI($this->base_API.'index_playlist/'.$this->id_akun);
 		$result = json_decode($result);
+
+		// Change Underscore to Whitespace from $kategori
+		$kategori = str_replace('-', ' ', $kategori);
 
 		// Daftar Rekomendasi
 		$daftar_rekomendasi = (array)$result;
-		$daftar_rekomendasi = array_filter($daftar_rekomendasi, function($daftar){
-			foreach($daftar as $item) {
-				if ($item->kategori == $kategori) return true;
-			}
+		$daftar_rekomendasi = array_filter($daftar_rekomendasi, function($daftar) use ($kategori) {
+			if ($daftar->kategori == $kategori) return true;
 		});
+		$daftar_rekomendasi = array_values($daftar_rekomendasi);
 		for ($i = 0; $i < count($daftar_rekomendasi); $i++)
 		{
 			$daftar_rekomendasi[$i]->rating = $daftar_rekomendasi[$i]->views;
@@ -120,21 +125,31 @@ class Users extends BaseController
 		usort($daftar_rekomendasi, array($this, 'sortByRating'));
 		$daftar_rekomendasi = (object)array_slice($daftar_rekomendasi, 0, 6);
 
+		// Generate new token
+		$token = csrf_hash();
+
 		$data = [
+			'rekomendasi_title' => $kategori,
+			'user' => $this->user,
+			'base_api_url' => $this->base_API_url,
 			'daftar_rekomendasi' => $daftar_rekomendasi,
 		];
 
-		return view('users/refresh_playlist', $data);
+		$view_response = view('users/refresh_playlist', $data);
+
+		$json = [
+			'token' => $token,
+			'html' => $view_response,
+		];
+
+		return $this->response->setJSON($json);
 	}
 
 	public function add_bookmark($id_playlist = null)
 	{
-		// Id Akun
-		$id_akun = $this->id_akun;
-
 		// Bookmark Data to POST
 		$post_data = [
-			'id_akun' => $id_akun,
+			'id_akun' => $this->id_akun,
 			'id_playlist' => $id_playlist,
 		];
 
@@ -158,11 +173,9 @@ class Users extends BaseController
 
 	public function delete_bookmark($id_playlist = null)
 	{
-		// Id Akun
-		$id_akun = $this->id_akun;
 
 		// Delete bookmark to Database API
-		$result = self::requestAPI($this->base_API.'/delete_bookmarked/'.$id_akun.'/'.$id_playlist);
+		$result = self::requestAPI($this->base_API.'/delete_bookmarked/'.$this->id_akun.'/'.$id_playlist);
 		$result = json_decode($result);
 
 		// Success?
@@ -289,11 +302,9 @@ class Users extends BaseController
 	}
 
 	public function bookmarked()
-	{
-		$id_akun = $this->id_akun;
-		
+	{		
 		// Read JSON Data
-		$result = self::requestAPI($this->base_API.'list_bookmarked/'.$id_akun);
+		$result = self::requestAPI($this->base_API.'list_bookmarked/'.$this->id_akun);
 		$result = json_decode($result);
 
 		$data = [

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        <h5>Rekomendasi</h5>
+        <h5>Rekomendasi <?= $rekomendasi_title ?></h5>
     </div>
 
     <div id="added-success" class="alert alert-success col-12" role="alert" style="display: none; font-size: 12px;">

@@ -88,6 +88,10 @@
 	margin-right: 0em;
 	font-weight: 900;
   }
+
+  .book-rekomen-active:hover {
+	  cursor: pointer;
+  }
   
   .book-rekomen:hover {
 	cursor: pointer;

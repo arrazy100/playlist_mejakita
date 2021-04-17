@@ -17,9 +17,9 @@
 </head>
 
 <body>
-    <?= $this->include('layout/navbar.php'); ?>
+    <?= $this->include("layout/navbar.php"); ?>
 
-    <?= $this->renderSection('content'); ?>
+    <?= $this->renderSection("content"); ?>
 
     <script src="<?= base_url() ?>/assets/bootstrap/js/bootstrap.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -30,19 +30,19 @@
         };
 
         function delete_bookmark(id) {
-            var csrfName = $("#protection_token").attr('name');
+            var csrfName = $("#protection_token").attr("name");
             var csrfHash = $("#protection_token").val();
 
             $.ajax({
                 url: "<?= base_url() ?>/delete-bookmark/" + id,
-                method: 'post',
+                method: "post",
                 data: { [csrfName]: csrfHash },
-                dataType: 'json',
+                dataType: "json",
                 success: function(response) {
                     $("#protection_token").val(response.token);
 
                     if (response.success) {
-                        const el = document.getElementById('book-' + id);
+                        const el = document.getElementById("book-" + id);
                         el.style.transition = "opacity 0.2s ease";
                         el.style.opacity = 0;
                         setTimeout(function() {
