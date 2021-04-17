@@ -171,29 +171,27 @@
                                     <img class="img-fluid" src="<?= $base_api_url ?>/files/profile/<?= $top->profile_pict ?>" alt="">
                                 </div>
                             </div>
-                            <div class="col-9 col-lg-8 d-flex align-items-center">
+                            <div class="col-9 col-lg-8">
                                 <div class="row">
-                                    <div class="col-10" style="width: 90px;">
-                                        <a class="card-detail">
-                                            <p class="judul-top-playlist text-truncate" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $rekomendasi->id_playlist ?>';">
+                                    <div class="col-10" style="width: 100%;">
+                                        <a class="card-detail" href="<?= base_url() ?>/detail-playlist/<?= $top->id_playlist ?>">
+                                            <p class="judul-top-playlist text-truncate">
                                                 <b><?= $top->nama_playlist ?></b>
                                             </p>    
                                         </a>
                                         <p class="views-top-playlist"><?= $top->views ?> Views</p>
                                     </div>
 
-                                    <div class="col-2 d-flex" style="margin-left: -30px;">
-                                        <div class="col">
-                                            <?php if ($user): ?>
+                                    <div class="col-2 d-flex align-items-center">
+                                        <?php if ($user): ?>
 
-                                            <i class="far fa-bookmark 
-                                                book-top-playlist<?php if ($top->marked_at): ?>-active<?php endif; ?>
-                                                book-<?= $top->id_playlist ?>"
-                                                onclick="event.stopPropagation(); <?php if ($top->marked_at): ?>delete_bookmark(<?= $top->id_playlist ?>);<?php else: ?>add_bookmark(<?= $top->id_playlist ?>);<?php endif; ?>">
-                                            </i>
+                                        <i class="far fa-bookmark 
+                                            book-top-playlist<?php if ($top->marked_at): ?>-active<?php endif; ?>
+                                            book-<?= $top->id_playlist ?>"
+                                            onclick="event.stopPropagation(); <?php if ($top->marked_at): ?>delete_bookmark(<?= $top->id_playlist ?>);<?php else: ?>add_bookmark(<?= $top->id_playlist ?>);<?php endif; ?>">
+                                        </i>
 
-                                            <?php endif; ?>
-                                        </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -210,7 +208,7 @@
 
                     <!-- TERBARU SECTION -->
 
-                    <div class="container" style="margin-bottom: 300px; margin-top: 50px;">
+                    <div class="container" style="margin-bottom: 300px; margin-top: 50px;" id="terbaru">
                         <div class="row">
                             <div class="col-12">
                                 <h5 style="margin: 20px 0 10px 0;">Terbaru</h5>
@@ -237,38 +235,46 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 col-lg-6">
+                            <div class="col-12 col-lg-6" id="filter-bulantahun">
                                 <div class="row">
                                     <div class="col-12 d-flex d-inline-block" style="margin-top: 30px;">
+                                        <?php if ($terbaru_bulan): ?>
+
                                         <div class="dropdown" style="margin-right: 10px;">
                                             <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="bulan" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Bulan
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="bulan">
-                                                <a class="dropdown-item" href="#">Januari</a>
-                                                <a class="dropdown-item" href="#">Februari</a>
-                                                <a class="dropdown-item" href="#">Maret</a>
-                                                <a class="dropdown-item" href="#">April</a>
-                                                <a class="dropdown-item" href="#">Mai</a>
-                                                <a class="dropdown-item" href="#">Juni</a>
-                                                <a class="dropdown-item" href="#">Juli</a>
-                                                <a class="dropdown-item" href="#">Agustus</a>
-                                                <a class="dropdown-item" href="#">September</a>
-                                                <a class="dropdown-item" href="#">Oktober</a>
-                                                <a class="dropdown-item" href="#">November</a>
-                                                <a class="dropdown-item" href="#">Desember</a>
+                                                <a class="dropdown-item" href="#filter-bulantahun" onclick="filter_bulantahun('#bulan', this);">Bulan</a>
+
+                                                <?php foreach ($terbaru_bulan as $bulan): ?>
+
+                                                <a class="dropdown-item" href="#filter-bulantahun" onclick="filter_bulantahun('#bulan', this);"><?= $bulan ?></a>
+
+                                                <?php endforeach; ?>
                                             </div>
                                         </div>
+
+                                        <?php endif; ?>
+
+                                        <?php if ($terbaru_tahun): ?>
 
                                         <div class="dropdown">
                                             <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="tahun" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Tahun
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="tahun">
-                                                <a class="dropdown-item" href="#">2020</a>
-                                                <a class="dropdown-item" href="#">2021</a>
+                                                <a class="dropdown-item" href="#tahun" onclick="filter_bulantahun('#tahun', this);">Tahun</a>
+
+                                                <?php foreach ($terbaru_tahun as $tahun): ?>
+
+                                                <a class="dropdown-item" href="#tahun" onclick="filter_bulantahun('#tahun', this);"><?= $tahun ?></a>
+
+                                                <?php endforeach; ?>
                                             </div>
                                         </div>
+
+                                        <?php endif; ?>
 
                                         <div class="col d-flex justify-content-center">
                                             <a class="carousel-control" href="#playlist-carousel" role="button" data-slide="prev">
@@ -283,6 +289,7 @@
                                     </div>
 
                                     <div class="col-12 terbaru-list" style="background-color: #4da8da;">
+                                        <div class="col-12" id="terbaru-filter-judul" style="color: #fff;"></div>
                                         <div class="col-12 scrollable-list" id="content-list" style="margin-top: 20px;">
                                             <?php if($terbaru):?>
                                             <?php foreach($terbaru as $l):?>
@@ -302,6 +309,11 @@
                                             <!-- END 1 -->
 
                                             <?php endforeach;?>
+
+                                            <?php else: ?>
+
+                                            <p style="color: white;">Tidak ada data</p>
+
                                             <?php endif;?>
 
                                         </div>

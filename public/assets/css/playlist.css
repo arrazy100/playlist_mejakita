@@ -37,18 +37,12 @@
   .book-top-playlist {
 	font-size: 23px;
 	color: #1f1f1f;
-	margin: 14px;
-	margin-top: 30px;
-	margin-left: -8px;
 	cursor: pointer;
   }
 
   .book-top-playlist-active {
 	font-size: 23px;
 	color: #1f1f1f;
-	margin: 14px;
-	margin-top: 30px;
-	margin-left: -8px;
 	font-weight: 900;
 	cursor: pointer;
   }
@@ -89,11 +83,11 @@
 	font-weight: 900;
   }
 
-  .book-rekomen-active:hover {
+  .book-rekomen-active:hover, .book-rekomen-active:focus, .book-rekomen-active:active {
 	  cursor: pointer;
   }
   
-  .book-rekomen:hover {
+  .book-rekomen:hover, .book-rekomen:focus, .book-rekomen:active {
 	cursor: pointer;
 	color: #000000;
 	font-weight: 900;
@@ -217,7 +211,7 @@
 	background-color: #ee8534;
   }
   
-  .btn-kategori:hover {
+  .btn-kategori:hover, .btn-kategori:focus, .btn-kategori:active {
 	background-color: #be6b27;
 	overflow: visible;
 	white-space: normal;
@@ -238,7 +232,7 @@
 	margin-top: 20px;
   }
 
-  .judul-top-playlist:hover {
+  .judul-top-playlist:hover, .judul-top-playlist:focus, .judul-top-playlist:active {
 	  cursor: pointer;
 	  overflow: visible;
 	  white-space: normal;
@@ -258,7 +252,7 @@
 	transition: transform .5s;
   }
   
-  .rekomen-img:hover {
+  .rekomen-img:hover, .rekomen-img:focus, .rekomen-img:active {
 	cursor: pointer;
 	text-decoration: none;
 	color: #6d6d6d;
@@ -281,7 +275,7 @@
 	font-size: 15px;
   }
 
-  .judul-rekomen:hover {
+  .judul-rekomen:hover, .judul-rekomen:focus, .judul-rekomen:active {
 	overflow: visible;
 	white-space: normal;
 	height: auto;
@@ -451,7 +445,7 @@
 
   .carousel-inner:hover {
 	z-index: 1;
-	}
+  }
   
   .terbaru-list {
 		position: static;
@@ -476,7 +470,7 @@
 		transition: transform .2s;
 	}
 
-	.content-item:hover {
+	.content-item:hover, .content-item:focus, .content-item:active {
 		cursor: pointer;
 	}
 
@@ -486,7 +480,7 @@
 		color: #203647;
 	}
 
-	.content-item-title:hover {
+	.content-item-title:hover, .content-item-title:focus, .content-item-title:active {
 		overflow: visible;
 		white-space: normal;
 		height: auto;

@@ -1,6 +1,14 @@
 <div class="row">
     <div class="col-12">
-        <h5>Rekomendasi <?= $rekomendasi_title ?></h5>
+        <h5>Rekomendasi <?= $rekomendasi_title ?>
+        
+        <?php if($rekomendasi_title): ?>
+
+        <a href="#rekomendasi" style="font-size: 12px; color: orange; padding-left: 10px;" onclick="filter_kategori(this, '');">Reset</a>
+
+        <?php endif?>
+
+        </h5>
     </div>
 
     <div id="added-success" class="alert alert-success col-12" role="alert" style="display: none; font-size: 12px;">

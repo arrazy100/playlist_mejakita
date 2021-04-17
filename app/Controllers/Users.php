@@ -83,6 +83,33 @@ class Users extends BaseController
 		// Terbaru
 		$terbaru = (array)$result;
 
+		// List Bulan Data Playlist
+		$terbaru_bulan = array_unique(array_column($terbaru, 'created_at'));
+		$terbaru_bulan = array_values($terbaru_bulan);
+		for($i = 0; $i < count($terbaru_bulan); $i++)
+		{
+			$date = strtotime($terbaru_bulan[$i]);
+			$terbaru_bulan[$i] = date("m", $date);
+		}
+		$terbaru_bulan = array_unique($terbaru_bulan);
+		asort($terbaru_bulan);
+		$terbaru_bulan = array_values($terbaru_bulan);
+		for($i = 0; $i < count($terbaru_bulan); $i++)
+		{
+			$terbaru_bulan[$i] = date("F", mktime(0, 0, 0, $terbaru_bulan[$i], 10));
+		}
+
+		// List Tahun Data Playlist
+		$terbaru_tahun = array_unique(array_column($terbaru, 'created_at'));
+		$terbaru_tahun = array_values($terbaru_tahun);
+		for($i = 0; $i < count($terbaru_tahun); $i++)
+		{
+			$date = strtotime($terbaru_tahun[$i]);
+			$terbaru_tahun[$i] = date("Y", $date);
+		}
+		$terbaru_tahun = array_unique($terbaru_tahun);
+		asort($terbaru_tahun);
+
 		// Random Carousel Image
 		$random_list = array_rand((array)$result, 3);
 
@@ -95,101 +122,12 @@ class Users extends BaseController
 			'daftar_rekomendasi' => $daftar_rekomendasi,
 			'top_playlist' => $top_playlist,
 			'terbaru' => $terbaru,
+			'terbaru_bulan' => $terbaru_bulan,
+			'terbaru_tahun' => $terbaru_tahun,
 			'random_list' => $random_list,
 		];
 
 		return view('users/playlist', $data);
-	}
-
-	public function filter_playlist($kategori = null)
-	{
-		// Read JSON Data
-		$result = self::requestAPI($this->base_API.'index_playlist/'.$this->id_akun);
-		$result = json_decode($result);
-
-		// Change Underscore to Whitespace from $kategori
-		$kategori = str_replace('-', ' ', $kategori);
-
-		// Daftar Rekomendasi
-		$daftar_rekomendasi = (array)$result;
-		$daftar_rekomendasi = array_filter($daftar_rekomendasi, function($daftar) use ($kategori) {
-			if ($daftar->kategori == $kategori) return true;
-		});
-		$daftar_rekomendasi = array_values($daftar_rekomendasi);
-		for ($i = 0; $i < count($daftar_rekomendasi); $i++)
-		{
-			$daftar_rekomendasi[$i]->rating = $daftar_rekomendasi[$i]->views;
-			if (property_exists($daftar_rekomendasi[$i], 'bookmarked_count'))
-				$daftar_rekomendasi[$i]->rating += $daftar_rekomendasi[$i]->bookmarked_count;
-		}
-		usort($daftar_rekomendasi, array($this, 'sortByRating'));
-		$daftar_rekomendasi = (object)array_slice($daftar_rekomendasi, 0, 6);
-
-		// Generate new token
-		$token = csrf_hash();
-
-		$data = [
-			'rekomendasi_title' => $kategori,
-			'user' => $this->user,
-			'base_api_url' => $this->base_API_url,
-			'daftar_rekomendasi' => $daftar_rekomendasi,
-		];
-
-		$view_response = view('users/refresh_playlist', $data);
-
-		$json = [
-			'token' => $token,
-			'html' => $view_response,
-		];
-
-		return $this->response->setJSON($json);
-	}
-
-	public function add_bookmark($id_playlist = null)
-	{
-		// Bookmark Data to POST
-		$post_data = [
-			'id_akun' => $this->id_akun,
-			'id_playlist' => $id_playlist,
-		];
-
-		// Add bookmark to Database API
-		$result = self::postAPI($this->base_API.'bookmark', $post_data);
-		$result = json_decode($result);
-
-		// Success?
-		$success = $result->status == 201 ? true : false;
-
-		// Generate new token
-		$token = csrf_hash();
-
-		$data = [
-			'token' => $token,
-			'success' => $success,
-		];
-
-		return $this->response->setJSON($data);
-	}
-
-	public function delete_bookmark($id_playlist = null)
-	{
-
-		// Delete bookmark to Database API
-		$result = self::requestAPI($this->base_API.'/delete_bookmarked/'.$this->id_akun.'/'.$id_playlist);
-		$result = json_decode($result);
-
-		// Success?
-		$success = $result->status == 200 ? true : false;
-
-		// Generate new token
-		$token = csrf_hash();
-
-		$data = [
-			'token' => $token,
-			'success' => $success,
-		];
-
-		return $this->response->setJSON($data);
 	}
 
 	public function detail($id = null)
@@ -314,5 +252,152 @@ class Users extends BaseController
 		];
 
 		return view('users/bookmarked', $data);
+	}
+
+	public function filter_playlist($kategori = null)
+	{
+		// Read JSON Data
+		$result = self::requestAPI($this->base_API.'index_playlist/'.$this->id_akun);
+		$result = json_decode($result);
+
+		// Daftar Rekomendasi
+		$daftar_rekomendasi = (array)$result;
+
+		if ($kategori)
+		{
+			// Change Underscore to Whitespace from $kategori
+			$kategori = str_replace('-', ' ', $kategori);
+			
+			// Filtering with Category
+			$daftar_rekomendasi = array_filter($daftar_rekomendasi, function($daftar) use ($kategori) {
+				if ($daftar->kategori == $kategori) return true;
+			});
+
+			$daftar_rekomendasi = array_values($daftar_rekomendasi);
+		}
+
+		for ($i = 0; $i < count($daftar_rekomendasi); $i++)
+		{
+			$daftar_rekomendasi[$i]->rating = $daftar_rekomendasi[$i]->views;
+			if (property_exists($daftar_rekomendasi[$i], 'bookmarked_count'))
+				$daftar_rekomendasi[$i]->rating += $daftar_rekomendasi[$i]->bookmarked_count;
+		}
+		usort($daftar_rekomendasi, array($this, 'sortByRating'));
+		$daftar_rekomendasi = (object)array_slice($daftar_rekomendasi, 0, 6);
+
+		// Generate new token
+		$token = csrf_hash();
+
+		$data = [
+			'rekomendasi_title' => $kategori,
+			'user' => $this->user,
+			'base_api_url' => $this->base_API_url,
+			'daftar_rekomendasi' => $daftar_rekomendasi,
+		];
+
+		$view_response = view('users/refresh_playlist', $data);
+
+		$json = [
+			'token' => $token,
+			'html' => $view_response,
+		];
+
+		return $this->response->setJSON($json);
+	}
+
+	public function filter_bulantahun($bulantahun = null)
+	{
+		// Read JSON Data
+		$result = self::requestAPI($this->base_API.'index_playlist/'.$this->id_akun);
+		$result = json_decode($result);
+
+		$terbaru = (array)$result;
+
+		if ($bulantahun)
+		{	
+			// Filtering with Category
+			$terbaru = array_filter($terbaru, function($daftar) use ($bulantahun) {
+				$bulantahun_array = explode("-", $bulantahun);
+				$date = strtotime($daftar->created_at);
+				$terbaru_bulan = date("F", $date);
+				$terbaru_tahun = date("Y", $date);
+
+				if ($bulantahun_array[0] && !$bulantahun_array[1])
+				{
+					if ($terbaru_bulan == $bulantahun_array[0]) return true;
+				}
+				else if (!$bulantahun_array[0] && $bulantahun_array[1])
+				{
+					if ($terbaru_tahun == $bulantahun_array[1]) return true;
+				}
+
+				if ($terbaru_bulan == $bulantahun_array[0] && $terbaru_tahun == $bulantahun_array[1]) return true;
+			});
+
+			$terbaru = array_values($terbaru);
+		}
+
+		// Generate new token
+		$token = csrf_hash();
+
+		$data = [
+			'terbaru' => $terbaru,
+		];
+
+		$view_response = view('users/refresh_terbaru', $data);
+
+		$json = [
+			'token' => $token,
+			'html' => $view_response,
+		];
+
+		return $this->response->setJSON($json);
+	}
+
+	public function add_bookmark($id_playlist = null)
+	{
+		// Bookmark Data to POST
+		$post_data = [
+			'id_akun' => $this->id_akun,
+			'id_playlist' => $id_playlist,
+		];
+
+		// Add bookmark to Database API
+		$result = self::postAPI($this->base_API.'bookmark', $post_data);
+		$result = json_decode($result);
+
+		// Success?
+		$success = $result->status == 201 ? true : false;
+
+		// Generate new token
+		$token = csrf_hash();
+
+		$data = [
+			'token' => $token,
+			'success' => $success,
+		];
+
+		return $this->response->setJSON($data);
+	}
+
+	public function delete_bookmark($id_playlist = null)
+	{
+
+		// Delete bookmark to Database API
+		$result = self::requestAPI($this->base_API.'/delete_bookmarked/'.$this->id_akun.'/'.$id_playlist);
+		$result = json_decode($result);
+
+		// Success?
+		$success = $result->status == 200 ? true : false;
+
+		// Generate new token
+		$token = csrf_hash();
+
+		$data = [
+			'token' => $token,
+			'success' => $success,
+		];
+
+		return $this->response->setJSON($data);
 	}
 }

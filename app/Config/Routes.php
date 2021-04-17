@@ -36,7 +36,10 @@ $routes->get('/detail-playlist/(:num)', 'Users::detail/$1');
 $routes->get('/detail-playlist/(:num)/(:num)', 'Users::detail_konten/$1/$2');
 $routes->get('/bookmarked', 'Users::bookmarked');
 
+$routes->post('/filter-playlist', 'Users::filter_playlist/');
 $routes->post('/filter-playlist/(:segment)', 'Users::filter_playlist/$1');
+$routes->post('/filter-bulantahun', 'Users::filter_bulantahun');
+$routes->post('/filter-bulantahun/(:segment)', 'Users::filter_bulantahun/$1');
 $routes->post('/add-bookmark/(:num)', 'Users::add_bookmark/$1');
 $routes->post('/delete-bookmark/(:num)', 'Users::delete_bookmark/$1');
 /*
