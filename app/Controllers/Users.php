@@ -10,7 +10,7 @@ class Users extends BaseController
 	private $user = true;
 	private $id_akun = 1;
 
-	public function requestAPI($url)
+	private function requestAPI($url)
 	{
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -22,7 +22,7 @@ class Users extends BaseController
 		return $output;
 	}
 
-	public function postAPI($url, $post_data)
+	private function postAPI($url, $post_data)
 	{
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -35,12 +35,12 @@ class Users extends BaseController
 		return $output;
 	}
 
-	public function sortByViews($a, $b)
+	private function sortByViews($a, $b)
 	{
 		return $a->views < $b->views;
 	}
 
-	public function sortByRating($a, $b)
+	private function sortByRating($a, $b)
 	{
 		return $a->rating < $b->rating;
 	}

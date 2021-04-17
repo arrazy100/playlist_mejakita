@@ -27,6 +27,11 @@
     <script>
         function toggleScroll() {
             document.getElementById("content-list").classList.toggle("scroll-active");
+            if (document.getElementById("content-list").scrollTop > 10) {
+                $("#content-list").animate({
+                    scrollTop: 0
+                }, 500);
+            }
         };
 
         <?php if ($user): ?>
@@ -127,7 +132,10 @@
                 dataType: "json",
                 success: function(response) {
                     $("#protection_token").val(response.token);
-                    $("#rekomendasi").html(response.html);
+                    $("#rekomendasi").fadeOut("slow", function() {
+                        $("#rekomendasi").html(response.html);
+                    });
+                    $("#rekomendasi").fadeIn("slow");
                 },
                 complete: function(response) {
                     $(el).attr("disabled", false);
@@ -170,8 +178,11 @@
                 dataType: "json",
                 success: function(response) {
                     $("#protection_token").val(response.token);
-                    $("#content-list").html(response.html);
-                    $("#terbaru-filter-judul").html("<h5>Filter: " + new_bulan + " " + new_tahun + "</h5>");
+                    $("#content-list").fadeOut("slow", function() {
+                        $("#content-list").html(response.html);
+                        $("#terbaru-filter-judul").html("<h5>Filter: " + new_bulan + " " + new_tahun + "</h5>");
+                    });
+                    $("#content-list").fadeIn("slow");
                 },
                 complete: function(response) {
                     $("#bulan").attr("disabled", false);

@@ -173,7 +173,7 @@
                             </div>
                             <div class="col-9 col-lg-8">
                                 <div class="row">
-                                    <div class="col-10" style="width: 100%;">
+                                    <div class="col-10 col-lg-9" style="width: 100%;">
                                         <a class="card-detail" href="<?= base_url() ?>/detail-playlist/<?= $top->id_playlist ?>">
                                             <p class="judul-top-playlist text-truncate">
                                                 <b><?= $top->nama_playlist ?></b>
@@ -182,7 +182,7 @@
                                         <p class="views-top-playlist"><?= $top->views ?> Views</p>
                                     </div>
 
-                                    <div class="col-2 d-flex align-items-center">
+                                    <div class="col-2 col-lg-3 d-flex align-items-center">
                                         <?php if ($user): ?>
 
                                         <i class="far fa-bookmark 
