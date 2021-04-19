@@ -220,14 +220,14 @@
                                     <div class="carousel-inner">
                                         <?php if($random_list): ?>
 
-                                        <div class="carousel-item active" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $terbaru[$random_list[0]]->id_playlist ?>';">
-                                            <img src="<?= $base_api_url ?>/files/profile/<?= $terbaru[$random_list[0]]->profile_pict ?>" class="w-100" alt="...">
+                                        <div class="carousel-item active" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $random_list[0]->id_playlist ?>';">
+                                            <img src="<?= $base_api_url ?>/files/profile/<?= $random_list[0]->profile_pict ?>" class="w-100" alt="...">
                                         </div>
-                                        <div class="carousel-item" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $terbaru[$random_list[1]]->id_playlist ?>';">
-                                            <img src="<?= $base_api_url ?>/files/profile/<?= $terbaru[$random_list[1]]->profile_pict ?>" class="w-100" alt="...">
+                                        <div class="carousel-item" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $random_list[1]->id_playlist ?>';">
+                                            <img src="<?= $base_api_url ?>/files/profile/<?= $random_list[1]->profile_pict ?>" class="w-100" alt="...">
                                         </div>
-                                        <div class="carousel-item" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $terbaru[$random_list[0]]->id_playlist ?>';">
-                                            <img src="<?= $base_api_url ?>/files/profile/<?= $terbaru[$random_list[2]]->profile_pict ?>" class="w-100" alt="...">
+                                        <div class="carousel-item" onclick="window.location.href='<?= base_url() ?>/detail-playlist/<?= $random_list[2]->id_playlist ?>';">
+                                            <img src="<?= $base_api_url ?>/files/profile/<?= $random_list[2]->profile_pict ?>" class="w-100" alt="...">
                                         </div>
 
                                         <?php endif; ?>

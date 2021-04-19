@@ -83,6 +83,9 @@ class Users extends BaseController
 		// Terbaru
 		$terbaru = (array)$result;
 
+		// Only Send 20 Data from $terbaru to Views
+		$terbaru = array_slice((array)$result, 0, 20);
+
 		// List Bulan Data Playlist
 		$terbaru_bulan = array_unique(array_column($terbaru, 'created_at'));
 		$terbaru_bulan = array_values($terbaru_bulan);
@@ -111,7 +114,12 @@ class Users extends BaseController
 		asort($terbaru_tahun);
 
 		// Random Carousel Image
-		$random_list = array_rand((array)$result, 3);
+		$random_number = range(0, count((array)$result));
+		shuffle($random_number);
+		$random_list = [];
+		array_push($random_list, ((array)$result)[$random_number[0]]);
+		array_push($random_list, ((array)$result)[$random_number[1]]);
+		array_push($random_list, ((array)$result)[$random_number[2]]);
 
 		$data = [
 			'title' => 'Playlist',
@@ -336,6 +344,8 @@ class Users extends BaseController
 
 			$terbaru = array_values($terbaru);
 		}
+
+		$terbaru = array_slice($terbaru, 0, 20);
 
 		// Generate new token
 		$token = csrf_hash();
