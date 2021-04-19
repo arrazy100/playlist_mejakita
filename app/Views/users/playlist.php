@@ -299,7 +299,7 @@
                                                     <p class="content-item-title text-truncate"><?= $l->nama_playlist ?></p>
                                                 </div>
                                                 <div class="col">
-                                                    <p class="content-item-date"><?= $l->created_at ?></p>
+                                                    <p class="content-item-date"><?= date("d F Y", strtotime($l->created_at)) ?></p>
                                                 </div>
                                                 <div class="col">
                                                     <p class="content-item-views"><?= $l->views ?> Views</p>
