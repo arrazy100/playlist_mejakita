@@ -49,10 +49,10 @@ class Users extends BaseController
 	{
 		// Read JSON Data
 		$result = self::requestAPI($this->base_API.'index_playlist/'.$this->id_akun);
-		$result = json_decode($result);
+		$result = (array)json_decode($result);
 
 		// Kategori
-		$kategori = array_unique(array_column((array)$result, 'kategori'));
+		$kategori = array_unique(array_column($result, 'kategori'));
 		$kategori = array_values($kategori);
 
 		$kategori_slug = [];
@@ -63,7 +63,7 @@ class Users extends BaseController
 		}
 
 		// Sort Playlist By Views
-		$sorted_playlist = (array)$result;
+		$sorted_playlist = $result;
 		usort($sorted_playlist, array($this, 'sortByViews'));
 
 		// Top Playlist
@@ -81,13 +81,10 @@ class Users extends BaseController
 		$daftar_rekomendasi = (object)array_slice($daftar_rekomendasi, 0, 6);
 
 		// Terbaru
-		$terbaru = (array)$result;
-
-		// Only Send 20 Data from $terbaru to Views
-		$terbaru = array_slice((array)$result, 0, 20);
+		$terbaru = array_slice($result, 0, 20);
 
 		// List Bulan Data Playlist
-		$terbaru_bulan = array_unique(array_column($terbaru, 'created_at'));
+		$terbaru_bulan = array_unique(array_column($result, 'created_at'));
 		$terbaru_bulan = array_values($terbaru_bulan);
 		for($i = 0; $i < count($terbaru_bulan); $i++)
 		{
@@ -103,7 +100,7 @@ class Users extends BaseController
 		}
 
 		// List Tahun Data Playlist
-		$terbaru_tahun = array_unique(array_column($terbaru, 'created_at'));
+		$terbaru_tahun = array_unique(array_column($result, 'created_at'));
 		$terbaru_tahun = array_values($terbaru_tahun);
 		for($i = 0; $i < count($terbaru_tahun); $i++)
 		{
@@ -114,12 +111,12 @@ class Users extends BaseController
 		asort($terbaru_tahun);
 
 		// Random Carousel Image
-		$random_number = range(0, count((array)$result));
+		$random_number = range(0, count($result) - 1);
 		shuffle($random_number);
 		$random_list = [];
-		array_push($random_list, ((array)$result)[$random_number[0]]);
-		array_push($random_list, ((array)$result)[$random_number[1]]);
-		array_push($random_list, ((array)$result)[$random_number[2]]);
+		array_push($random_list, $result[$random_number[0]]);
+		array_push($random_list, $result[$random_number[1]]);
+		array_push($random_list, $result[$random_number[2]]);
 
 		$data = [
 			'title' => 'Playlist',
@@ -345,8 +342,6 @@ class Users extends BaseController
 			$terbaru = array_values($terbaru);
 		}
 
-		$terbaru = array_slice($terbaru, 0, 20);
-
 		// Generate new token
 		$token = csrf_hash();
 
@@ -359,6 +354,7 @@ class Users extends BaseController
 		$json = [
 			'token' => $token,
 			'html' => $view_response,
+			'n_data' => count($terbaru),
 		];
 
 		return $this->response->setJSON($json);

@@ -180,7 +180,10 @@
                     $("#protection_token").val(response.token);
                     $("#content-list").fadeOut("slow", function() {
                         $("#content-list").html(response.html);
-                        $("#terbaru-filter-judul").html("<h5>Filter: " + new_bulan + " " + new_tahun + "</h5>");
+                        if (new_bulan || new_tahun)
+                            $("#terbaru-filter-judul").html("<h5>Filter: " + new_bulan + " " + new_tahun + " (" + response.n_data + " data)" + "</h5>");
+                        else
+                            $("#terbaru-filter-judul").html("");
                     });
                     $("#content-list").fadeIn("slow");
                 },
